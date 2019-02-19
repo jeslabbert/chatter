@@ -1,3 +1,4 @@
+<p>Edited by Icarative</p>
 <p align="center"><img width="300" src="https://raw.githubusercontent.com/thedevdojo/chatter/master/public/assets/images/logo.png"></p>
 
 <p align="center">
