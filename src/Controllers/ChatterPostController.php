@@ -213,13 +213,12 @@ class ChatterPostController extends Controller
     public function destroy($id, Request $request)
     {
         $post = Models::post()->with('discussion')->findOrFail($id);
-        if ($request->user()->permission_level < 6) {
-            if ($request->user()->id !== (int) $post->user_id) {
-                return redirect('/'.config('chatter.routes.home'))->with([
-                    'chatter_alert_type' => 'danger',
-                    'chatter_alert'      => 'Could not delete the response. Make sure you have permission to delete.',
-                ]);
-            }
+
+        if ($request->user()->id !== (int) $post->user_id) {
+            return redirect('/'.config('chatter.routes.home'))->with([
+                'chatter_alert_type' => 'danger',
+                'chatter_alert'      => trans('chatter::alert.danger.reason.destroy_post'),
+            ]);
         }
 
         if ($post->discussion->posts()->oldest()->first()->id === $post->id) {

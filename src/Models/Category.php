@@ -2,10 +2,12 @@
 
 namespace DevDojo\Chatter\Models;
 
+use Hyn\Tenancy\Traits\UsesTenantConnection;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
+    use UsesTenantConnection;
     protected $table = 'chatter_categories';
     public $timestamps = true;
     public $with = 'parents';
