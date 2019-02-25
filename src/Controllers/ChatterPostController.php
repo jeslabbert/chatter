@@ -131,7 +131,7 @@ class ChatterPostController extends Controller
 
         $past = Carbon::now()->subMinutes(config('chatter.security.time_between_posts'));
 
-        $last_post = Models::post()->where('user_id', '=', $user->user_id)->where('created_at', '>=', $past)->first();
+        $last_post = Models::post()->where('user_id', '=', $user->id)->where('created_at', '>=', $past)->first();
 
         if (isset($last_post)) {
             return true;
@@ -142,7 +142,7 @@ class ChatterPostController extends Controller
 
     private function sendEmailNotifications($discussion)
     {
-        $users = $discussion->users->except(Auth::user()->user_id);
+        $users = $discussion->users->except(Auth::user()->id);
         foreach ($users as $user) {
             Mail::to($user)->queue(new ChatterDiscussionUpdated($discussion));
         }
@@ -171,7 +171,7 @@ class ChatterPostController extends Controller
         }
 
         $post = Models::post()->find($id);
-        if (!Auth::guest() && (Auth::user()->user_id == $post->user_id)) {
+        if (!Auth::guest() && (Auth::user()->id == $post->user_id)) {
             if ($post->markdown) {
                 $post->body = $request->body;
             } else {
