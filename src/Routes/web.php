@@ -24,7 +24,7 @@ $authMiddleware = function ($accessor) use ($middleware) {
 /*
  * Chatter routes.
  */
-Route::group(['middleware' => 'tenancy.enforce'], function () {
+
     // Route helper.
     $route = function ($accessor, $default = '') {
         return $this->app->config->get('chatter.routes.'.$accessor, $default);
@@ -232,4 +232,4 @@ Route::group(['middleware' => 'tenancy.enforce'], function () {
         'uses' => 'DevDojo\Chatter\Controllers\ChatterAtomController@index',
         'middleware' => $middleware('home'),
     ]);
-});
+
