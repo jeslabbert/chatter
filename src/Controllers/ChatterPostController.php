@@ -192,6 +192,27 @@ class ChatterPostController extends Controller
                 ];
 
             return redirect('/'.config('chatter.routes.home').'/'.config('chatter.routes.discussion').'/'.$category->slug.'/'.$discussion->slug)->with($chatter_alert);
+        }elseif (!Auth::guest() && (Auth::user()->permission_level > 5)) {
+            if ($post->markdown) {
+                $post->body = $request->body;
+            } else {
+                $post->body = Purifier::clean($request->body);
+            }
+            $post->save();
+
+            $discussion = Models::discussion()->find($post->chatter_discussion_id);
+
+            $category = Models::category()->find($discussion->chatter_category_id);
+            if (!isset($category->slug)) {
+                $category = Models::category()->first();
+            }
+
+            $chatter_alert = [
+                'chatter_alert_type' => 'success',
+                'chatter_alert'      => trans('chatter::alert.success.reason.updated_post'),
+            ];
+
+            return redirect('/'.config('chatter.routes.home').'/'.config('chatter.routes.discussion').'/'.$category->slug.'/'.$discussion->slug)->with($chatter_alert);
         } else {
             $chatter_alert = [
                 'chatter_alert_type' => 'danger',
