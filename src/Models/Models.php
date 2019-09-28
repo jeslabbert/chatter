@@ -8,11 +8,8 @@
 
 namespace DevDojo\Chatter\Models;
 
-use Hyn\Tenancy\Traits\UsesTenantConnection;
-
 class Models
 {
-    use UsesTenantConnection;
     /**
      * Map for the models.
      *

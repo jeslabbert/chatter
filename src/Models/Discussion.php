@@ -2,14 +2,13 @@
 
 namespace DevDojo\Chatter\Models;
 
-use Hyn\Tenancy\Traits\UsesTenantConnection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Discussion extends Model
 {
     use SoftDeletes;
-    use UsesTenantConnection;
+    
     protected $table = 'chatter_discussion';
     public $timestamps = true;
     protected $fillable = ['title', 'chatter_category_id', 'user_id', 'slug', 'color'];
@@ -17,7 +16,7 @@ class Discussion extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\User', 'user_id', 'user_id');
+        return $this->belongsTo(config('chatter.user.namespace'));
     }
 
     public function category()

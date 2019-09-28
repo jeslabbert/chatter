@@ -86,7 +86,7 @@ class ChatterDiscussionController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
-        $user_id = Auth::user()->user_id;
+        $user_id = Auth::user()->id;
 
         if (config('chatter.security.limit_time_between_posts')) {
             if ($this->notEnoughTimeBetweenDiscussion()) {
@@ -176,7 +176,7 @@ class ChatterDiscussionController extends Controller
 
         $past = Carbon::now()->subMinutes(config('chatter.security.time_between_posts'));
 
-        $last_discussion = Models::discussion()->where('user_id', '=', $user->user_id)->where('created_at', '>=', $past)->first();
+        $last_discussion = Models::discussion()->where('user_id', '=', $user->id)->where('created_at', '>=', $past)->first();
 
         if (isset($last_discussion)) {
             return true;

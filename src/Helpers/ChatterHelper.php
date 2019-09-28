@@ -2,11 +2,8 @@
 
 namespace DevDojo\Chatter\Helpers;
 
-use Hyn\Tenancy\Traits\UsesTenantConnection;
-
 class ChatterHelper
 {
-    use UsesTenantConnection;
     /**
      * Convert any string to a color code.
      *
