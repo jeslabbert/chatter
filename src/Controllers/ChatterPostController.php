@@ -158,7 +158,6 @@ class ChatterPostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd('Testing');
         $stripped_tags_body = ['body' => strip_tags($request->body)];
         $validator = Validator::make($stripped_tags_body, [
             'body' => 'required|min:10',
